@@ -41,6 +41,9 @@ ngx_http_upstream_init_round_robin(ngx_conf_t *cf,
     ngx_http_upstream_rr_peers_t  *peers, *backup;
 
     us->peer.init = ngx_http_upstream_init_round_robin_peer;
+#if (T_NGX_HTTP_UPSTREAM_RANDOM)
+    us->flags = T_NGX_HTTP_UPSTREAM_RANDOM_FLAG;
+#endif
 
     if (us->servers) {
         server = us->servers->elts;
@@ -97,7 +100,7 @@ ngx_http_upstream_init_round_robin(ngx_conf_t *cf,
                 peer[n].name = server[i].addrs[j].name;
 #if (T_NGX_HTTP_UPSTREAM_ID)
                 peer[n].id = server[i].id;
-#endif                
+#endif
                 peer[n].weight = server[i].weight;
                 peer[n].effective_weight = server[i].weight;
                 peer[n].current_weight = 0;
@@ -109,7 +112,7 @@ ngx_http_upstream_init_round_robin(ngx_conf_t *cf,
 #if (T_NGX_HTTP_DYNAMIC_RESOLVE)
                 peer[n].host = server[i].host;
 #endif
-         
+
 #if (NGX_HTTP_UPSTREAM_CHECK)
                 if (!server[i].down) {
                     peer[n].check_index =

@@ -96,7 +96,7 @@ static u_char ngx_http_error_powered_by[] =
 
 static u_char ngx_http_error_tail[] =
 #if (T_NGX_SERVER_INFO)
-"<hr><center>tengine</center>" CRLF
+"<hr><center>zws</center>" CRLF
 #else
 "<hr><center>nginx</center>" CRLF
 #endif
@@ -732,7 +732,7 @@ ngx_http_send_special_response(ngx_http_request_t *r,
 #if (!T_NGX_SERVER_INFO)
     u_char       *tail;
     size_t        len;
-#endif    
+#endif
     ngx_int_t     rc;
     ngx_buf_t    *b;
     ngx_uint_t    msie_padding;
@@ -741,7 +741,7 @@ ngx_http_send_special_response(ngx_http_request_t *r,
     ngx_buf_t    *ib;
     ngx_uint_t    i;
 
-#else 
+#else
     ngx_chain_t   out[3];
 #endif
 
@@ -756,7 +756,7 @@ ngx_http_send_special_response(ngx_http_request_t *r,
         ib = NULL;
     }
 
-#else 
+#else
     if (clcf->server_tokens == NGX_HTTP_SERVER_TOKENS_ON) {
         len = sizeof(ngx_http_error_full_tail) - 1;
         tail = ngx_http_error_full_tail;

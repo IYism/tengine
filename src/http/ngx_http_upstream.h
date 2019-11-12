@@ -110,7 +110,7 @@ typedef struct {
     time_t                           fail_timeout;
     ngx_msec_t                       slow_start;
     ngx_uint_t                       down;
-#if (T_NGX_HTTP_UPSTREAM_ID)    
+#if (T_NGX_HTTP_UPSTREAM_ID)
     ngx_str_t                        id;
 #endif
 
@@ -133,6 +133,9 @@ typedef struct {
 #define NGX_HTTP_UPSTREAM_BACKUP        0x0020
 #define NGX_HTTP_UPSTREAM_MAX_CONNS     0x0100
 #define NGX_HTTP_UPSTREAM_ID            0x0040
+#if (T_NGX_HTTP_UPSTREAM_RANDOM)
+#define T_NGX_HTTP_UPSTREAM_RANDOM_FLAG 0x0200
+#endif
 
 
 struct ngx_http_upstream_srv_conf_s {

@@ -322,6 +322,9 @@ ngx_http_upstream_get_vnswrr_peer(ngx_peer_connection_t *pc, void *data)
     pc->sockaddr = peer->sockaddr;
     pc->socklen = peer->socklen;
     pc->name = &peer->name;
+#if (T_NGX_HTTP_DYNAMIC_RESOLVE)
+    pc->host = &peer->host;
+#endif
 
     peer->conns++;
 
@@ -552,7 +555,7 @@ ngx_http_upstream_get_vnswrr(ngx_http_upstream_vnswrr_peer_data_t  *vnsp)
 }
 
 
-static void 
+static void
 ngx_http_upstream_init_virtual_peers(ngx_http_upstream_rr_peers_t *peers,
                                      ngx_http_upstream_vnswrr_srv_conf_t *uvnscf,
                                      ngx_uint_t s, ngx_uint_t e)
@@ -567,7 +570,7 @@ ngx_http_upstream_init_virtual_peers(ngx_http_upstream_rr_peers_t *peers,
     }
 
     vpeers = uvnscf->vpeers;
-    
+
     for (i = s; i < e; i++) {
         rindex = ngx_http_upstream_get_rr_peer(peers, &peer);
         if (rindex == NGX_ERROR) {
@@ -577,14 +580,14 @@ ngx_http_upstream_init_virtual_peers(ngx_http_upstream_rr_peers_t *peers,
             if (i != 0) {
                 i--;
             }
-    
+
             continue;
         }
-    
+
         vpeers[i].vpeer = peer;
         vpeers[i].rindex = rindex;
     }
-    
+
     uvnscf->vnumber = i;
 
     return;
